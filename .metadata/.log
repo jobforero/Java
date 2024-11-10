@@ -4234,3 +4234,49 @@ Caused by: java.io.IOException: CreateProcess error=2, El sistema no puede encon
 	at java.base/java.lang.ProcessImpl.start(ProcessImpl.java:159)
 	at java.base/java.lang.ProcessBuilder.start(ProcessBuilder.java:1126)
 	... 8 more
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2024-11-09 23:58:59.996
+!MESSAGE Cannot run program "\usr\bin\git" (in directory "\usr\bin"): CreateProcess error=2, El sistema no puede encontrar el archivo especificado
+
+!ENTRY org.eclipse.core.resources 4 368 2024-11-10 00:00:31.340
+!MESSAGE Resource '/HolaMundo' does not exist.
+!STACK 0
+java.lang.Exception: Resource '/HolaMundo' does not exist.
+	at org.eclipse.core.internal.resources.ResourceException.provideStackTrace(ResourceException.java:42)
+	at org.eclipse.core.internal.resources.ResourceException.<init>(ResourceException.java:38)
+	at org.eclipse.core.internal.resources.Resource.checkExists(Resource.java:364)
+	at org.eclipse.core.internal.resources.Resource.checkAccessible(Resource.java:238)
+	at org.eclipse.core.internal.resources.Project.checkAccessible(Project.java:183)
+	at org.eclipse.core.internal.resources.Project.hasNature(Project.java:564)
+	at org.eclipse.wst.common.componentcore.internal.ModuleStructuralModel.resNeedsMigrating(ModuleStructuralModel.java:359)
+	at org.eclipse.wst.common.componentcore.internal.ModuleStructuralModel.prepareProjectModulesIfNecessary(ModuleStructuralModel.java:241)
+	at org.eclipse.wst.common.componentcore.internal.ModuleStructuralModel.getPrimaryRootObject(ModuleStructuralModel.java:119)
+	at org.eclipse.wst.common.componentcore.internal.StructureEdit.getComponentModelRoot(StructureEdit.java:471)
+	at org.eclipse.wst.common.componentcore.internal.StructureEdit.getWorkbenchModules(StructureEdit.java:506)
+	at org.eclipse.wst.common.componentcore.internal.StructureEdit.getComponent(StructureEdit.java:949)
+	at org.eclipse.wst.common.componentcore.internal.resources.VirtualComponent.createResource(VirtualComponent.java:124)
+	at org.eclipse.wst.common.componentcore.internal.resources.VirtualComponent.initializeResource(VirtualComponent.java:113)
+	at org.eclipse.wst.common.componentcore.internal.resources.VirtualComponent.<init>(VirtualComponent.java:148)
+	at org.eclipse.jst.j2ee.componentcore.util.EARVirtualComponent.<init>(EARVirtualComponent.java:68)
+	at org.eclipse.jst.j2ee.componentcore.util.EARVirtualComponent.createComponent(EARVirtualComponent.java:78)
+	at org.eclipse.wst.common.componentcore.internal.util.ComponentImplManager.createComponentSynchronously(ComponentImplManager.java:232)
+	at org.eclipse.wst.common.componentcore.internal.util.ComponentImplManager.createComponent(ComponentImplManager.java:215)
+	at org.eclipse.wst.common.componentcore.internal.util.ComponentImplManager.createComponent(ComponentImplManager.java:205)
+	at org.eclipse.wst.common.componentcore.ComponentCore.createComponent(ComponentCore.java:64)
+	at org.eclipse.jst.jee.model.internal.JEE5ModelProvider.getModelResource(JEE5ModelProvider.java:177)
+	at org.eclipse.jst.jee.model.internal.EAR5ModelProvider.getModelObject(EAR5ModelProvider.java:53)
+	at org.eclipse.jst.jee.model.internal.JEE5ModelProvider.getModelObject(JEE5ModelProvider.java:238)
+	at org.eclipse.jst.jee.ui.internal.navigator.Ear5ContentProvider.getNewContentProviderInstance(Ear5ContentProvider.java:158)
+	at org.eclipse.jst.jee.ui.internal.navigator.LoadingJeeDDJob.run(LoadingJeeDDJob.java:50)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
+
+!ENTRY org.eclipse.core.jobs 4 2 2024-11-10 00:00:31.344
+!MESSAGE An internal error occurred during: "Loading descriptor for HolaMundo.".
+!STACK 0
+java.lang.NullPointerException: Cannot invoke "org.eclipse.wst.common.componentcore.resources.IVirtualComponent.getRootFolder()" because the return value of "org.eclipse.wst.common.componentcore.ComponentCore.createComponent(org.eclipse.core.resources.IProject)" is null
+	at org.eclipse.jst.jee.model.internal.JEE5ModelProvider.getModelResource(JEE5ModelProvider.java:177)
+	at org.eclipse.jst.jee.model.internal.EAR5ModelProvider.getModelObject(EAR5ModelProvider.java:53)
+	at org.eclipse.jst.jee.model.internal.JEE5ModelProvider.getModelObject(JEE5ModelProvider.java:238)
+	at org.eclipse.jst.jee.ui.internal.navigator.Ear5ContentProvider.getNewContentProviderInstance(Ear5ContentProvider.java:158)
+	at org.eclipse.jst.jee.ui.internal.navigator.LoadingJeeDDJob.run(LoadingJeeDDJob.java:50)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
