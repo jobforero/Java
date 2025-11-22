@@ -7,6 +7,7 @@ import java.util.ArrayList;
  * GestorProductos
  * Maneja el catálogo de productos disponibles en el restaurante
  */
+
 public class GestorProductos {
     
     private ArrayList<Producto> catalogo;

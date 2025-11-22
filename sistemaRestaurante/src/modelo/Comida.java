@@ -11,6 +11,7 @@ package modelo;
  * - Atributos específicos de Comida
  * - Implementación del método abstracto calcularPrecio()
  */
+
 public class Comida extends Producto {
     
     // ATRIBUTO ESPECÍFICO de Comida

@@ -4,6 +4,7 @@ package utilidades;
  * Utiles
  * Clase con funciones auxiliares y de utilidad general
  */
+
 public class Utiles {
     
     /**

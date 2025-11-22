@@ -7,6 +7,7 @@ import java.util.Scanner;
  * Clase de utilidades para validar entradas del usuario
  * Métodos estáticos para ser usados en cualquier parte del programa
  */
+
 public class Validaciones {
     
     /**

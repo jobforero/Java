@@ -7,6 +7,7 @@ import java.util.ArrayList;
  * GestorPedidos
  * Maneja todos los pedidos del restaurante
  */
+
 public class GestorPedidos {
     
     private ArrayList<Pedido> pedidos;

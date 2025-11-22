@@ -5,10 +5,11 @@ import servicio.*;
 import utilidades.*;
 import java.util.Scanner;
 
-/**
+/*
  * MAIN - Clase Principal del Sistema
  * Contiene el menú interactivo con SWITCH-CASE
  */
+
 public class Main {
     
     // Scanner global para entrada de datos

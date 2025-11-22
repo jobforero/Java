@@ -8,6 +8,7 @@ import java.util.ArrayList;
  * 
  * COMPOSICIÓN: Un Pedido "tiene" (contiene) una lista de Productos
  */
+
 public class Pedido {
     
     // ATRIBUTOS

@@ -11,6 +11,7 @@ package modelo;
  * ¿Por qué abstracta?
  * - Porque "Producto" es muy genérico, siempre será una Comida, Bebida o Combo específico
  */
+
 public abstract class Producto {
     
     // ATRIBUTOS - ENCAPSULAMIENTO (private)

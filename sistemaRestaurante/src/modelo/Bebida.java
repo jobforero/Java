@@ -4,6 +4,7 @@ package modelo;
  * HERENCIA: Bebida extiende Producto
  * Similar a Comida, pero con atributos específicos de bebidas
  */
+
 public class Bebida extends Producto {
     
     // ATRIBUTOS ESPECÍFICOS de Bebida

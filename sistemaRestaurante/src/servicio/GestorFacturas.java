@@ -7,6 +7,7 @@ import java.util.ArrayList;
  * GestorFacturas
  * Maneja la generación y almacenamiento de facturas
  */
+
 public class GestorFacturas {
     
     private ArrayList<Factura> facturas;
