@@ -1,5 +1,117 @@
 package modelo;
 
-public class Combo {
+import java.util.ArrayList;
 
+/**
+ * HERENCIA: Combo extiende Producto
+ * COMPOSICIÓN: Combo contiene una lista de Productos
+ * 
+ * Esta es la clase más compleja porque un Combo está formado por varios productos
+ */
+public class Combo extends Producto {
+    
+    // COMPOSICIÓN: Un Combo "tiene" (contiene) varios Productos
+    private ArrayList<Producto> productosDelCombo;
+    private double descuento; // Ej: 0.10 = 10% de descuento
+    
+    /**
+     * CONSTRUCTOR
+     */
+    public Combo(String nombre, double descuento) {
+        // El precio inicial del combo es 0, se calculará con los productos
+        super(nombre, 0);
+        this.productosDelCombo = new ArrayList<>();
+        this.descuento = descuento;
+    }
+    
+    /**
+     * Método para agregar productos al combo
+     */
+    public void agregarProducto(Producto producto) {
+        // VALIDACIÓN: No agregar combos dentro de combos
+        if (producto instanceof Combo) {
+            System.out.println("Error: No se pueden agregar combos dentro de un combo");
+            return;
+        }
+        productosDelCombo.add(producto);
+        System.out.println(producto.getNombre() + " agregado al combo");
+    }
+    
+    /**
+     * Método para eliminar producto del combo
+     */
+    public void eliminarProducto(Producto producto) {
+        if (productosDelCombo.remove(producto)) {
+            System.out.println(producto.getNombre() + " eliminado del combo");
+        } else {
+            System.out.println("Producto no encontrado en el combo");
+        }
+    }
+    
+    /**
+     * POLIMORFISMO: calcularPrecio() para Combo
+     * 
+     * Calcula el precio sumando todos los productos y aplicando el descuento
+     * Aquí se ve el POLIMORFISMO en acción:
+     * - Cada producto.calcularPrecio() se ejecuta según su tipo real
+     */
+    @Override
+    public double calcularPrecio() {
+        double precioTotal = 0;
+        
+        // FOR: Recorre todos los productos del combo
+        for (Producto producto : productosDelCombo) {
+            // POLIMORFISMO: Llama al calcularPrecio() específico de cada producto
+            precioTotal += producto.calcularPrecio();
+        }
+        
+        // Aplica el descuento
+        double precioConDescuento = precioTotal - (precioTotal * descuento);
+        
+        return precioConDescuento;
+    }
+    
+    // GETTERS Y SETTERS
+    
+    public ArrayList<Producto> getProductosDelCombo() {
+        return productosDelCombo;
+    }
+    
+    public double getDescuento() {
+        return descuento;
+    }
+    
+    public void setDescuento(double descuento) {
+        // VALIDACIÓN: El descuento debe estar entre 0 y 1
+        if (descuento >= 0 && descuento <= 1) {
+            this.descuento = descuento;
+        } else {
+            System.out.println("Error: Descuento debe estar entre 0 y 1");
+        }
+    }
+    
+    /**
+     * Muestra los productos del combo
+     */
+    public void mostrarProductos() {
+        System.out.println("\n=== Productos del Combo: " + getNombre() + " ===");
+        if (productosDelCombo.isEmpty()) {
+            System.out.println("El combo está vacío");
+        } else {
+            for (int i = 0; i < productosDelCombo.size(); i++) {
+                System.out.println((i + 1) + ". " + productosDelCombo.get(i));
+            }
+            System.out.println("Descuento: " + (descuento * 100) + "%");
+            System.out.println("Precio total: $" + calcularPrecio());
+        }
+    }
+    
+    /**
+     * SOBREESCRITURA de toString()
+     */
+    @Override
+    public String toString() {
+        return getNombre() + " (Combo con " + productosDelCombo.size() + 
+               " productos) - $" + calcularPrecio() + " [Desc: " + (descuento*100) + "%]";
+    }
 }

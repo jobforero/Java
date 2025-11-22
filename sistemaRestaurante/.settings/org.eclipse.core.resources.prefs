@@ -1,2 +1,11 @@
 eclipse.preferences.version=1
+encoding//src/modelo/Bebida.java=UTF-8
+encoding//src/modelo/Comida.java=UTF-8
+encoding//src/modelo/Factura.java=UTF-8
+encoding//src/modelo/Pedido.java=UTF-8
+encoding//src/servicio/GestorFacturas.java=UTF-8
+encoding//src/servicio/GestorPedidos.java=UTF-8
+encoding//src/servicio/GestorProductos.java=UTF-8
+encoding//src/sistemaRestaurante/Main.java=UTF-8
+encoding//src/utilidades/Utiles.java=UTF-8
 encoding/<project>=windows-1252
