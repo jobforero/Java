@@ -1,0 +1,442 @@
+package sistemaRestaurante;
+
+import modelo.*;
+import servicio.*;
+import utilidades.*;
+import java.util.Scanner;
+
+/*
+ * MAIN - Clase Principal del Sistema
+ * Contiene el menÃº interactivo con SWITCH-CASE
+ */
+
+public class Main {
+    
+    // Scanner global para entrada de datos
+    private static Scanner scanner = new Scanner(System.in);
+    
+    // Gestores del sistema
+    private static GestorProductos gestorProductos;
+    private static GestorPedidos gestorPedidos;
+    private static GestorFacturas gestorFacturas;
+    
+    public static void main(String[] args) {
+        // Inicializar gestores
+        inicializarSistema();
+        
+        // Mostrar bienvenida
+        Utiles.mostrarBienvenida();
+        
+        // Variable para controlar el bucle del menÃº
+        boolean continuar = true;
+        
+        // WHILE: Mantiene el programa ejecutÃ¡ndose
+        while (continuar) {
+            mostrarMenuPrincipal();
+            int opcion = Validaciones.validarEnteroPositivo(scanner);
+            
+            // SWITCH-CASE: MenÃº de opciones
+            switch (opcion) {
+                case 1:
+                    menuProductos();
+                    break;
+                case 2:
+                    menuPedidos();
+                    break;
+                case 3:
+                    menuFacturas();
+                    break;
+                case 4:
+                    mostrarReportes();
+                    break;
+                case 5:
+                    Utiles.mostrarDespedida();
+                    continuar = false;
+                    break;
+                default:
+                    System.out.println("â  OpciÃ³n invÃ¡lida. Intente nuevamente.");
+            }
+        }
+        
+        scanner.close();
+    }
+    
+    /**
+     * Inicializar el sistema
+     */
+    private static void inicializarSistema() {
+        System.out.println("Iniciando sistema...");
+        gestorProductos = new GestorProductos();
+        gestorPedidos = new GestorPedidos();
+        gestorFacturas = new GestorFacturas();
+        System.out.println("â Sistema iniciado correctamente\n");
+    }
+    
+    /**
+     * MENÃ PRINCIPAL
+     */
+    private static void mostrarMenuPrincipal() {
+        System.out.println("\nââââââââââââââââââââââââââââââââââââââââââââââââââ");
+        System.out.println("â              MENÃ PRINCIPAL                    â");
+        System.out.println("ââââââââââââââââââââââââââââââââââââââââââââââââââ");
+        System.out.println("  1. ð GestiÃ³n de Productos");
+        System.out.println("  2. ð GestiÃ³n de Pedidos");
+        System.out.println("  3. ðµ GestiÃ³n de Facturas");
+        System.out.println("  4. ð Reportes");
+        System.out.println("  5. ðª Salir");
+        System.out.println("ââââââââââââââââââââââââââââââââââââââââââââââââ");
+        System.out.print("Seleccione una opciÃ³n: ");
+    }
+    
+    /**
+     * MENÃ DE PRODUCTOS
+     */
+    private static void menuProductos() {
+        boolean volver = false;
+        
+        while (!volver) {
+            System.out.println("\nââââââââââââââââââââââââââââââââââââââââââââââââââ");
+            System.out.println("â          ð GESTIÃN DE PRODUCTOS               â");
+            System.out.println("ââââââââââââââââââââââââââââââââââââââââââââââââââ");
+            System.out.println("  1. Ver catÃ¡logo completo");
+            System.out.println("  2. Agregar Comida");
+            System.out.println("  3. Agregar Bebida");
+            System.out.println("  4. Crear Combo");
+            System.out.println("  5. Volver al menÃº principal");
+            System.out.println("ââââââââââââââââââââââââââââââââââââââââââââââââ");
+            System.out.print("Seleccione una opciÃ³n: ");
+            
+            int opcion = Validaciones.validarEnteroPositivo(scanner);
+            
+            switch (opcion) {
+                case 1:
+                    gestorProductos.mostrarCatalogo();
+                    break;
+                case 2:
+                    agregarComida();
+                    break;
+                case 3:
+                    agregarBebida();
+                    break;
+                case 4:
+                    crearCombo();
+                    break;
+                case 5:
+                    volver = true;
+                    break;
+                default:
+                    System.out.println("â  OpciÃ³n invÃ¡lida");
+            }
+        }
+    }
+    
+    /**
+     * Agregar una nueva comida
+     */
+    private static void agregarComida() {
+        System.out.println("\n--- Agregar Nueva Comida ---");
+        
+        System.out.print("Nombre: ");
+        String nombre = scanner.nextLine();
+        
+        if (!Validaciones.validarTextoNoVacio(nombre)) return;
+        
+        System.out.print("Precio: $");
+        double precio = Validaciones.validarDecimalPositivo(scanner);
+        
+        System.out.print("Tipo (Entrada/Plato Fuerte/Postre): ");
+        String tipo = scanner.nextLine();
+        
+        System.out.print("Â¿Es picante? (S/N): ");
+        String respuesta = scanner.nextLine().trim().toUpperCase();
+        boolean esPicante = respuesta.equals("S");
+        
+        Comida nuevaComida = new Comida(nombre, precio, tipo, esPicante);
+        gestorProductos.agregarProducto(nuevaComida);
+    }
+    
+    /**
+     * Agregar una nueva bebida
+     */
+    private static void agregarBebida() {
+        System.out.println("\n--- Agregar Nueva Bebida ---");
+        
+        System.out.print("Nombre: ");
+        String nombre = scanner.nextLine();
+        
+        if (!Validaciones.validarTextoNoVacio(nombre)) return;
+        
+        System.out.print("Precio: $");
+        double precio = Validaciones.validarDecimalPositivo(scanner);
+        
+        System.out.print("TamaÃ±o (PequeÃ±a/Mediana/Grande): ");
+        String tamaÃ±o = scanner.nextLine();
+        
+        System.out.print("Â¿Es alcohÃ³lica? (S/N): ");
+        String respuesta = scanner.nextLine().trim().toUpperCase();
+        boolean esAlcoholica = respuesta.equals("S");
+        
+        Bebida nuevaBebida = new Bebida(nombre, precio, tamaÃ±o, esAlcoholica);
+        gestorProductos.agregarProducto(nuevaBebida);
+    }
+    
+    /**
+     * Crear un combo personalizado
+     */
+    private static void crearCombo() {
+        System.out.println("\n--- Crear Combo ---");
+        
+        System.out.print("Nombre del combo: ");
+        String nombre = scanner.nextLine();
+        
+        if (!Validaciones.validarTextoNoVacio(nombre)) return;
+        
+        System.out.print("Descuento (0.10 = 10%): ");
+        double descuento = Validaciones.validarDecimalPositivo(scanner);
+        
+        if (!Validaciones.validarDescuento(descuento)) return;
+        
+        Combo nuevoCombo = gestorProductos.crearCombo(nombre, descuento);
+        
+        if (nuevoCombo != null) {
+            System.out.println("\nÂ¿Desea agregar productos al combo ahora? (S/N)");
+            if (Validaciones.confirmarAccion(scanner, "")) {
+                agregarProductosACombo(nuevoCombo);
+            }
+        }
+    }
+    
+    /**
+     * Agregar productos a un combo
+     */
+    private static void agregarProductosACombo(Combo combo) {
+        boolean continuar = true;
+        
+        while (continuar) {
+            gestorProductos.mostrarCatalogo();
+            System.out.print("Ingrese el Ã­ndice del producto (o -1 para terminar): ");
+            int indice = Validaciones.validarEnteroPositivo(scanner);
+            
+            if (indice == -1) {
+                continuar = false;
+            } else {
+                Producto producto = gestorProductos.obtenerProducto(indice);
+                if (producto != null && !(producto instanceof Combo)) {
+                    combo.agregarProducto(producto);
+                }
+            }
+        }
+        
+        combo.mostrarProductos();
+    }
+    
+    /**
+     * MENÃ DE PEDIDOS
+     */
+    private static void menuPedidos() {
+        boolean volver = false;
+        
+        while (!volver) {
+            System.out.println("\nââââââââââââââââââââââââââââââââââââââââââââââââââ");
+            System.out.println("â           ð GESTIÃN DE PEDIDOS                â");
+            System.out.println("ââââââââââââââââââââââââââââââââââââââââââââââââââ");
+            System.out.println("  1. Crear nuevo pedido");
+            System.out.println("  2. Agregar producto al pedido actual");
+            System.out.println("  3. Ver pedido actual");
+            System.out.println("  4. Eliminar producto del pedido");
+            System.out.println("  5. Finalizar pedido actual");
+            System.out.println("  6. Ver todos los pedidos");
+            System.out.println("  7. Cancelar pedido actual");
+            System.out.println("  8. Volver al menÃº principal");
+            System.out.println("ââââââââââââââââââââââââââââââââââââââââââââââââ");
+            System.out.print("Seleccione una opciÃ³n: ");
+            
+            int opcion = Validaciones.validarEnteroPositivo(scanner);
+            
+            switch (opcion) {
+                case 1:
+                    gestorPedidos.crearNuevoPedido();
+                    break;
+                case 2:
+                    agregarProductoAPedido();
+                    break;
+                case 3:
+                    gestorPedidos.mostrarPedidoActual();
+                    break;
+                case 4:
+                    eliminarProductoDePedido();
+                    break;
+                case 5:
+                    gestorPedidos.finalizarPedidoActual();
+                    break;
+                case 6:
+                    gestorPedidos.mostrarTodosPedidos();
+                    break;
+                case 7:
+                    gestorPedidos.cancelarPedidoActual();
+                    break;
+                case 8:
+                    volver = true;
+                    break;
+                default:
+                    System.out.println("â  OpciÃ³n invÃ¡lida");
+            }
+        }
+    }
+    
+    /**
+     * Agregar producto al pedido actual
+     */
+    private static void agregarProductoAPedido() {
+        if (!gestorPedidos.hayPedidoActivo()) {
+            System.out.println("â  Debe crear un pedido primero");
+            return;
+        }
+        
+        gestorProductos.mostrarCatalogo();
+        System.out.print("Ingrese el Ã­ndice del producto: ");
+        int indice = Validaciones.validarEnteroPositivo(scanner);
+        
+        Producto producto = gestorProductos.obtenerProducto(indice);
+        if (producto != null) {
+            gestorPedidos.agregarProductoAPedido(producto);
+        }
+    }
+    
+    /**
+     * Eliminar producto del pedido
+     */
+    private static void eliminarProductoDePedido() {
+        if (!gestorPedidos.hayPedidoActivo()) {
+            System.out.println("â  No hay un pedido activo");
+            return;
+        }
+        
+        gestorPedidos.mostrarPedidoActual();
+        System.out.print("Ingrese el Ã­ndice del producto a eliminar: ");
+        int indice = Validaciones.validarEnteroPositivo(scanner);
+        
+        gestorPedidos.eliminarProductoDePedido(indice);
+    }
+    
+    /**
+     * MENÃ DE FACTURAS
+     */
+    private static void menuFacturas() {
+        boolean volver = false;
+        
+        while (!volver) {
+            System.out.println("\nââââââââââââââââââââââââââââââââââââââââââââââââââ");
+            System.out.println("â          ðµ GESTIÃN DE FACTURAS                â");
+            System.out.println("ââââââââââââââââââââââââââââââââââââââââââââââââââ");
+            System.out.println("  1. Generar factura desde pedido actual");
+            System.out.println("  2. Generar factura desde pedido existente");
+            System.out.println("  3. Ver todas las facturas");
+            System.out.println("  4. Ver factura especÃ­fica");
+            System.out.println("  5. Volver al menÃº principal");
+            System.out.println("ââââââââââââââââââââââââââââââââââââââââââââââââ");
+            System.out.print("Seleccione una opciÃ³n: ");
+            
+            int opcion = Validaciones.validarEnteroPositivo(scanner);
+            
+            switch (opcion) {
+                case 1:
+                    generarFacturaPedidoActual();
+                    break;
+                case 2:
+                    generarFacturaPedidoExistente();
+                    break;
+                case 3:
+                    gestorFacturas.mostrarTodasFacturas();
+                    break;
+                case 4:
+                    verFacturaEspecifica();
+                    break;
+                case 5:
+                    volver = true;
+                    break;
+                default:
+                    System.out.println("â  OpciÃ³n invÃ¡lida");
+            }
+        }
+    }
+    
+    /**
+     * Generar factura del pedido actual
+     */
+    private static void generarFacturaPedidoActual() {
+        if (!gestorPedidos.hayPedidoActivo()) {
+            System.out.println("â  No hay un pedido activo");
+            return;
+        }
+        
+        Pedido pedido = gestorPedidos.getPedidoActual();
+        
+        if (!pedido.tieneProductos()) {
+            System.out.println("â  El pedido estÃ¡ vacÃ­o");
+            return;
+        }
+        
+        System.out.print("Nombre del cliente: ");
+        String cliente = scanner.nextLine();
+        
+        gestorFacturas.generarFactura(cliente, pedido);
+        gestorPedidos.finalizarPedidoActual();
+    }
+    
+    /**
+     * Generar factura de un pedido existente
+     */
+    private static void generarFacturaPedidoExistente() {
+        gestorPedidos.mostrarTodosPedidos();
+        
+        if (gestorPedidos.cantidadPedidos() == 0) {
+            return;
+        }
+        
+        System.out.print("Ingrese el Ã­ndice del pedido: ");
+        int indice = Validaciones.validarEnteroPositivo(scanner);
+        
+        Pedido pedido = gestorPedidos.obtenerPedido(indice);
+        
+        if (pedido != null) {
+            System.out.print("Nombre del cliente: ");
+            String cliente = scanner.nextLine();
+            
+            gestorFacturas.generarFactura(cliente, pedido);
+        }
+    }
+    
+    /**
+     * Ver una factura especÃ­fica
+     */
+    private static void verFacturaEspecifica() {
+        gestorFacturas.mostrarTodasFacturas();
+        
+        if (gestorFacturas.cantidadFacturas() == 0) {
+            return;
+        }
+        
+        System.out.print("Ingrese el Ã­ndice de la factura: ");
+        int indice = Validaciones.validarEnteroPositivo(scanner);
+        
+        gestorFacturas.mostrarFactura(indice);
+    }
+    
+    /**
+     * Mostrar reportes del sistema
+     */
+    private static void mostrarReportes() {
+        System.out.println("\nââââââââââââââââââââââââââââââââââââââââââââââââââ");
+        System.out.println("â              ð REPORTES                       â");
+        System.out.println("ââââââââââââââââââââââââââââââââââââââââââââââââââ\n");
+        
+        System.out.println("ð Total de productos: " + gestorProductos.cantidadProductos());
+        System.out.println("ð Total de pedidos: " + gestorPedidos.cantidadPedidos());
+        System.out.println("ðµ Total de facturas: " + gestorFacturas.cantidadFacturas());
+        
+        if (gestorFacturas.cantidadFacturas() > 0) {
+            gestorFacturas.mostrarReporteVentas();
+        }
+    }
+}

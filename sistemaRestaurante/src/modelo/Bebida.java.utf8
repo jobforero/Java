@@ -1,0 +1,70 @@
+package modelo;
+
+/**
+ * HERENCIA: Bebida extiende Producto
+ * Similar a Comida, pero con atributos especÃ­ficos de bebidas
+ */
+
+public class Bebida extends Producto {
+    
+    // ATRIBUTOS ESPECÃFICOS de Bebida
+    private String tamaÃ±o; // "PequeÃ±a", "Mediana", "Grande"
+    private boolean esAlcoholica;
+    
+    /**
+     * CONSTRUCTOR
+     * Llama al constructor padre con super()
+     */
+    public Bebida(String nombre, double precio, String tamaÃ±o, boolean esAlcoholica) {
+        super(nombre, precio);
+        this.tamaÃ±o = tamaÃ±o;
+        this.esAlcoholica = esAlcoholica;
+    }
+    
+    // GETTERS Y SETTERS
+    
+    public String getTamaÃ±o() {
+        return tamaÃ±o;
+    }
+    
+    public void setTamaÃ±o(String tamaÃ±o) {
+        this.tamaÃ±o = tamaÃ±o;
+    }
+    
+    public boolean isEsAlcoholica() {
+        return esAlcoholica;
+    }
+    
+    public void setEsAlcoholica(boolean esAlcoholica) {
+        this.esAlcoholica = esAlcoholica;
+    }
+    
+    /**
+     * IMPLEMENTACIÃN del mÃ©todo abstracto calcularPrecio()
+     * POLIMORFISMO: Se comporta especÃ­fico para Bebida
+     * 
+     * PodrÃ­as agregar lÃ³gica:
+     * - TamaÃ±o grande: +$1.00
+     * - Es alcohÃ³lica: +$2.00
+     */
+    @Override
+    public double calcularPrecio() {
+        double precioFinal = getPrecio();
+        
+        // Ejemplo de lÃ³gica adicional (opcional)
+        if (tamaÃ±o.equalsIgnoreCase("Grande")) {
+            precioFinal += 1.0;
+        }
+        
+        return precioFinal;
+    }
+    
+    /**
+     * SOBREESCRITURA de toString()
+     */
+    @Override
+    public String toString() {
+        String alcoholica = esAlcoholica ? " ðº" : "";
+        return super.toString() + " [" + tamaÃ±o + "]" + alcoholica;
+    }
+}

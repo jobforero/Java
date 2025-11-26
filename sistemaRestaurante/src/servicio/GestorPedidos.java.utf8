@@ -1,0 +1,181 @@
+package servicio;
+
+import modelo.*;
+import java.util.ArrayList;
+
+/**
+ * GestorPedidos
+ * Maneja todos los pedidos del restaurante
+ */
+
+public class GestorPedidos {
+    
+    private ArrayList<Pedido> pedidos;
+    private Pedido pedidoActual; // El pedido que se estÃ¡ construyendo
+    
+    /**
+     * CONSTRUCTOR
+     */
+    public GestorPedidos() {
+        this.pedidos = new ArrayList<>();
+        this.pedidoActual = null;
+    }
+    
+    /**
+     * Crear un nuevo pedido
+     */
+    public Pedido crearNuevoPedido() {
+        pedidoActual = new Pedido();
+        pedidos.add(pedidoActual);
+        System.out.println("\nâ Nuevo pedido creado: #" + pedidoActual.getNumeroPedido());
+        return pedidoActual;
+    }
+    
+    /**
+     * Agregar producto al pedido actual
+     */
+    public void agregarProductoAPedido(Producto producto) {
+        // VALIDACIÃN: Debe haber un pedido activo
+        if (pedidoActual == null) {
+            System.out.println("Error: No hay un pedido activo. Cree un pedido primero.");
+            return;
+        }
+        
+        // VALIDACIÃN: El producto no puede ser null
+        if (producto == null) {
+            System.out.println("Error: Producto invÃ¡lido");
+            return;
+        }
+        
+        pedidoActual.agregarProducto(producto);
+    }
+    
+    /**
+     * Mostrar el pedido actual
+     */
+    public void mostrarPedidoActual() {
+        // VALIDACIÃN: Debe haber un pedido activo
+        if (pedidoActual == null) {
+            System.out.println("â  No hay un pedido activo");
+            return;
+        }
+        
+        pedidoActual.mostrarProductos();
+    }
+    
+    /**
+     * Mostrar todos los pedidos
+     * FOR: Recorre la lista de pedidos
+     */
+    public void mostrarTodosPedidos() {
+        System.out.println("\nââââââââââââââââââââââââââââââââââââââââââââââââââ");
+        System.out.println("â           ð TODOS LOS PEDIDOS                 â");
+        System.out.println("ââââââââââââââââââââââââââââââââââââââââââââââââââ\n");
+        
+        // VALIDACIÃN: Si no hay pedidos
+        if (pedidos.isEmpty()) {
+            System.out.println("â  No hay pedidos registrados");
+            return;
+        }
+        
+        // FOR: Recorrer todos los pedidos
+        for (int i = 0; i < pedidos.size(); i++) {
+            Pedido p = pedidos.get(i);
+            System.out.printf("[%d] Pedido #%d | %d productos | Total: $%.2f | Estado: %s\n",
+                            i,
+                            p.getNumeroPedido(),
+                            p.getProductos().size(),
+                            p.calcularTotal(),
+                            p.getEstado());
+        }
+        System.out.println("ââââââââââââââââââââââââââââââââââââââââââââââââ\n");
+    }
+    
+    /**
+     * Obtener pedido por Ã­ndice
+     */
+    public Pedido obtenerPedido(int indice) {
+        // VALIDACIÃN: Verificar Ã­ndice vÃ¡lido
+        if (indice >= 0 && indice < pedidos.size()) {
+            return pedidos.get(indice);
+        } else {
+            System.out.println("Error: Ãndice de pedido invÃ¡lido");
+            return null;
+        }
+    }
+    
+    /**
+     * Finalizar el pedido actual
+     */
+    public void finalizarPedidoActual() {
+        // VALIDACIÃN: Debe haber un pedido activo
+        if (pedidoActual == null) {
+            System.out.println("Error: No hay un pedido activo");
+            return;
+        }
+        
+        // VALIDACIÃN: El pedido debe tener productos
+        if (!pedidoActual.tieneProductos()) {
+            System.out.println("Error: El pedido estÃ¡ vacÃ­o. Agregue productos primero.");
+            return;
+        }
+        
+        pedidoActual.cambiarEstado("Completado");
+        System.out.println("â Pedido #" + pedidoActual.getNumeroPedido() + " finalizado");
+        pedidoActual = null; // Libera el pedido actual
+    }
+    
+    /**
+     * Cancelar el pedido actual
+     */
+    public void cancelarPedidoActual() {
+        if (pedidoActual == null) {
+            System.out.println("Error: No hay un pedido activo");
+            return;
+        }
+        
+        pedidoActual.cambiarEstado("Cancelado");
+        System.out.println("â Pedido #" + pedidoActual.getNumeroPedido() + " cancelado");
+        pedidoActual = null;
+    }
+    
+    /**
+     * Eliminar producto del pedido actual
+     */
+    public void eliminarProductoDePedido(int indice) {
+        if (pedidoActual == null) {
+            System.out.println("Error: No hay un pedido activo");
+            return;
+        }
+        
+        pedidoActual.eliminarProducto(indice);
+    }
+    
+    /**
+     * Verificar si hay un pedido activo
+     */
+    public boolean hayPedidoActivo() {
+        return pedidoActual != null;
+    }
+    
+    /**
+     * Obtener el pedido actual
+     */
+    public Pedido getPedidoActual() {
+        return pedidoActual;
+    }
+    
+    /**
+     * Obtener todos los pedidos
+     */
+    public ArrayList<Pedido> getPedidos() {
+        return pedidos;
+    }
+    
+    /**
+     * Cantidad de pedidos
+     */
+    public int cantidadPedidos() {
+        return pedidos.size();
+    }
+}

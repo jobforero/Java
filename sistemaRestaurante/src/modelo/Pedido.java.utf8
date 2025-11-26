@@ -1,0 +1,139 @@
+package modelo;
+
+import java.util.ArrayList;
+
+/**
+ * Clase Pedido
+ * Representa un pedido que contiene varios productos
+ * 
+ * COMPOSICIÃN: Un Pedido "tiene" (contiene) una lista de Productos
+ */
+
+public class Pedido {
+    
+    // ATRIBUTOS
+    private static int contadorPedidos = 0; // Contador estÃ¡tico para generar IDs Ãºnicos
+    private int numeroPedido;
+    private ArrayList<Producto> productos;
+    private String estado; // "En Proceso", "Completado", "Cancelado"
+    
+    /**
+     * CONSTRUCTOR
+     */
+    public Pedido() {
+        contadorPedidos++;
+        this.numeroPedido = contadorPedidos;
+        this.productos = new ArrayList<>();
+        this.estado = "En Proceso";
+    }
+    
+    /**
+     * Agregar producto al pedido
+     */
+    public void agregarProducto(Producto producto) {
+        // VALIDACIÃN: El producto no puede ser null
+        if (producto == null) {
+            System.out.println("Error: Producto invÃ¡lido");
+            return;
+        }
+        
+        productos.add(producto);
+        System.out.println(" " + producto.getNombre() + " agregado al pedido");
+    }
+    
+    /**
+     * Eliminar producto del pedido
+     */
+    public void eliminarProducto(int indice) {
+        // VALIDACIÃN: Verificar que el Ã­ndice sea vÃ¡lido
+        if (indice >= 0 && indice < productos.size()) {
+            Producto removido = productos.remove(indice);
+            System.out.println("â " + removido.getNombre() + " eliminado del pedido");
+        } else {
+            System.out.println("Error: Ãndice invÃ¡lido");
+        }
+    }
+    
+    /**
+     * Calcular total del pedido
+     * FOR: Recorre todos los productos
+     * POLIMORFISMO: Cada producto calcula su precio segÃºn su tipo
+     */
+    public double calcularTotal() {
+        double total = 0;
+        
+        // FOR mejorado (for-each)
+        for (Producto producto : productos) {
+            // AquÃ­ se aplica POLIMORFISMO
+            total += producto.calcularPrecio();
+        }
+        
+        return total;
+    }
+    
+    /**
+     * Mostrar todos los productos del pedido
+     * FOR: Para recorrer la lista
+     */
+    public void mostrarProductos() {
+        System.out.println("\nââââââââââââââââââââââââââââââââââââââââââ");
+        System.out.println("â    PEDIDO #" + numeroPedido + " - " + estado + "           â");
+        System.out.println("ââââââââââââââââââââââââââââââââââââââââââ");
+        
+        // VALIDACIÃN: Si el pedido estÃ¡ vacÃ­o
+        if (productos.isEmpty()) {
+            System.out.println("â  El pedido estÃ¡ vacÃ­o");
+            return;
+        }
+        
+        // FOR tradicional con Ã­ndice
+        for (int i = 0; i < productos.size(); i++) {
+            Producto p = productos.get(i);
+            System.out.printf("%d. %-30s $%.2f\n", 
+                            (i + 1), 
+                            p.getNombre(), 
+                            p.calcularPrecio());
+        }
+        
+        System.out.println("ââââââââââââââââââââââââââââââââââââââââ");
+        System.out.printf("TOTAL: $%.2f\n", calcularTotal());
+        System.out.println("ââââââââââââââââââââââââââââââââââââââââ\n");
+    }
+    
+    /**
+     * Verificar si el pedido tiene productos
+     */
+    public boolean tieneProductos() {
+        return !productos.isEmpty();
+    }
+    
+    /**
+     * Cambiar estado del pedido
+     */
+    public void cambiarEstado(String nuevoEstado) {
+        this.estado = nuevoEstado;
+    }
+    
+    // GETTERS Y SETTERS
+    
+    public int getNumeroPedido() {
+        return numeroPedido;
+    }
+    
+    public ArrayList<Producto> getProductos() {
+        return productos;
+    }
+    
+    public String getEstado() {
+        return estado;
+    }
+    
+    /**
+     * toString() para representaciÃ³n rÃ¡pida
+     */
+    @Override
+    public String toString() {
+        return "Pedido #" + numeroPedido + " - " + productos.size() + 
+               " productos - Total: $" + calcularTotal();
+    }
+}

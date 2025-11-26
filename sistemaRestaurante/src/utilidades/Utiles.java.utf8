@@ -1,0 +1,99 @@
+package utilidades;
+
+/**
+ * Utiles
+ * Clase con funciones auxiliares y de utilidad general
+ */
+
+public class Utiles {
+    
+    /**
+     * Pausa el programa (espera a que el usuario presione Enter)
+     */
+    public static void pausa() {
+        System.out.println("\nPresione ENTER para continuar...");
+        try {
+            System.in.read();
+        } catch (Exception e) {
+            // Ignorar excepciÃ³n
+        }
+    }
+    
+    /**
+     * Limpiar pantalla (simula limpiar la consola)
+     */
+    public static void limpiarPantalla() {
+        // En consola real, esto no funciona en todas las plataformas
+        // Es mÃ¡s visual que funcional
+        for (int i = 0; i < 50; i++) {
+            System.out.println();
+        }
+    }
+    
+    /**
+     * Mostrar mensaje de bienvenida
+     */
+    public static void mostrarBienvenida() {
+        System.out.println("\nââââââââââââââââââââââââââââââââââââââââââââââââââ");
+        System.out.println("â                                                â");
+        System.out.println("â        ð½ï¸  SISTEMA DE PEDIDOS  ð½ï¸            â");
+        System.out.println("â           RESTAURANTE POO 2024                 â");
+        System.out.println("â                                                â");
+        System.out.println("ââââââââââââââââââââââââââââââââââââââââââââââââââ\n");
+    }
+    
+    /**
+     * Mostrar mensaje de despedida
+     */
+    public static void mostrarDespedida() {
+        System.out.println("\nââââââââââââââââââââââââââââââââââââââââââââââââââ");
+        System.out.println("â                                                â");
+        System.out.println("â          Â¡Gracias por usar el sistema!         â");
+        System.out.println("â              Hasta pronto ð                   â");
+        System.out.println("â                                                â");
+        System.out.println("ââââââââââââââââââââââââââââââââââââââââââââââââââ\n");
+    }
+    
+    /**
+     * Formatear precio con sÃ­mbolo de dÃ³lar
+     */
+    public static String formatearPrecio(double precio) {
+        return String.format("$%.2f", precio);
+    }
+    
+    /**
+     * Mostrar lÃ­nea separadora
+     */
+    public static void mostrarSeparador() {
+        System.out.println("ââââââââââââââââââââââââââââââââââââââââââââââââ");
+    }
+    
+    /**
+     * Centrar texto (para tÃ­tulos)
+     */
+    public static String centrarTexto(String texto, int ancho) {
+        if (texto.length() >= ancho) {
+            return texto;
+        }
+        
+        int espaciosIzq = (ancho - texto.length()) / 2;
+        int espaciosDer = ancho - texto.length() - espaciosIzq;
+        
+        return " ".repeat(espaciosIzq) + texto + " ".repeat(espaciosDer);
+    }
+    
+    /**
+     * Validar si una cadena es numÃ©rica
+     */
+    public static boolean esNumerico(String str) {
+        if (str == null || str.isEmpty()) {
+            return false;
+        }
+        try {
+            Double.parseDouble(str);
+            return true;
+        } catch (NumberFormatException e) {
+            return false;
+        }
+    }
+}

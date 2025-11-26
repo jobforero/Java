@@ -1,0 +1,71 @@
+package modelo;
+
+/**
+ * HERENCIA: Comida extiende (hereda de) Producto
+ * 
+ * Â¿QuÃ© hereda?
+ * - Todos los atributos: nombre, precio
+ * - Todos los mÃ©todos: getNombre(), getPrecio(), etc.
+ * 
+ * Â¿QuÃ© agrega?
+ * - Atributos especÃ­ficos de Comida
+ * - ImplementaciÃ³n del mÃ©todo abstracto calcularPrecio()
+ */
+
+public class Comida extends Producto {
+    
+    // ATRIBUTO ESPECÃFICO de Comida
+    private String tipoComida; // Ej: "Entrada", "Plato Fuerte", "Postre"
+    private boolean esPicante;
+    
+    /**
+     * CONSTRUCTOR
+     * Usa super() para llamar al constructor de la clase padre (Producto)
+     */
+    public Comida(String nombre, double precio, String tipoComida, boolean esPicante) {
+        // super() llama al constructor de Producto
+        super(nombre, precio);
+        this.tipoComida = tipoComida;
+        this.esPicante = esPicante;
+    }
+    
+    // GETTERS Y SETTERS para atributos especÃ­ficos
+    
+    public String getTipoComida() {
+        return tipoComida;
+    }
+    
+    public void setTipoComida(String tipoComida) {
+        this.tipoComida = tipoComida;
+    }
+    
+    public boolean isEsPicante() {
+        return esPicante;
+    }
+    
+    public void setEsPicante(boolean esPicante) {
+        this.esPicante = esPicante;
+    }
+    
+    /**
+     * IMPLEMENTACIÃN del mÃ©todo abstracto
+     * POLIMORFISMO: Este mÃ©todo se comporta especÃ­ficamente para Comida
+     * 
+     * Por ahora, retorna el precio normal
+     * PodrÃ­as agregar lÃ³gica como: si es picante, +$0.50
+     */
+    @Override
+    public double calcularPrecio() {
+        return getPrecio(); // Retorna el precio tal cual
+    }
+    
+    /**
+     * SOBREESCRITURA (Override) de toString()
+     * Agrega informaciÃ³n especÃ­fica de Comida
+     */
+    @Override
+    public String toString() {
+        String picante = esPicante ? " ð¶ï¸" : "";
+        return super.toString() + " [" + tipoComida + "]" + picante;
+    }
+}
